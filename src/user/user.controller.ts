@@ -9,9 +9,8 @@ export class UserController {
     constructor(private readonly userService: UserService) {}
 
     @Post('add')
-    addUserInfo(@Body() userDot: UserDot): string {
-        console.log('body')
-        return this.userService.AddUserInfo(userDot);
+    async addUserInfo(@Body() userDot: UserDot) {
+        this.userService.AddUserInfo(userDot);
     }
 
     @Get('query')

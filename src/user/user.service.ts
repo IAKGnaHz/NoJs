@@ -5,7 +5,7 @@ import { User } from "./user.interface"
 
 export class UserService {
     // 声明users 数组
-    private users: Array<User> = []
+    private readonly users: Array<User> = []
 
     // 查询是否含有这个用户
     QueryUserId(user: User) {
@@ -20,13 +20,12 @@ export class UserService {
     }
 
     // 查询所有用户信息
-    QueryUserList() {
+    QueryUserList() :Array<User>{
         return this.users
     }
 
     // 添加用户信息
     AddUserInfo(user: User) {
-        console.info(user,this.users)
         this.users.push(user)
         return '添加成功'
     }
@@ -41,7 +40,7 @@ export class UserService {
     }
 
     ClearUserInfo() {
-        this.users  = []
+        // this.users  = []
         return '清除成功'
     }
 }

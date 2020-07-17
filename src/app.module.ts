@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { Module , NestModule, MiddlewareConsumer} from '@nestjs/common';
+import { LoggerMiddleware } from './middleware/logger.middleware'
 import { UserModule } from './user/user.module'
 import { AppController } from './app.controller';
 import { UserController } from './user/user.controller';
@@ -10,4 +11,11 @@ import { AppService } from './app.service';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+// 配置使用 中间件作为输出
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes('user')
+  }
+}

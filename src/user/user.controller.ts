@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body} from "@nestjs/common"
+import { Controller, Get, Post, Body, HttpException, HttpStatus} from "@nestjs/common"
+import { ForbiddenException } from './../error/forbidden.exception'
 import { UserService } from './user.service'
 import { UserDot } from './creat-user.dto'
 import { User } from './user.interface'
@@ -7,6 +8,16 @@ import { User } from './user.interface'
 
 export class UserController {
     constructor(private readonly userService: UserService) {}
+
+    @Get('error')
+    async getError() {
+        throw new HttpException('403 Not Forbidden',HttpStatus.FORBIDDEN)
+    }
+
+    @Get('forbidden') 
+    async getForbidden() {
+        throw new ForbiddenException()
+    }
 
     @Post('add')
     async addUserInfo(@Body() userDot: UserDot) {

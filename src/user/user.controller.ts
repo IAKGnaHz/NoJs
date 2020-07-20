@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, HttpException, HttpStatus} from "@nestjs/common"
+import { Controller, Get, Post, Body, HttpException, HttpStatus, UseFilters} from "@nestjs/common"
 import { ForbiddenException } from './../error/forbidden.exception'
 import { UserService } from './user.service'
 import { UserDot } from './creat-user.dto'
 import { User } from './user.interface'
+import { HttpExceptionFilter } from './../error/http-exception.filter'
 
 @Controller('user')
 
@@ -22,6 +23,12 @@ export class UserController {
     @Post('add')
     async addUserInfo(@Body() userDot: UserDot) {
         this.userService.AddUserInfo(userDot);
+    }
+
+    @Post('customHttp')
+    @UseFilters(new HttpExceptionFilter)
+    async customHttp(@Body() userDot: UserDot) {
+        throw new ForbiddenException()
     }
 
     @Get('query')
